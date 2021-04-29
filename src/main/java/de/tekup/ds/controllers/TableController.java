@@ -56,7 +56,12 @@ public class TableController {
         ));
     }
 
-
+    // 3 - c) Quelle est la table la plus réservée ? 
+ 	@GetMapping("/bestTable")
+ 	public List<TableResponseDTO> getBestSellingCourse() {
+ 		return this.convertToDto(service.getMostReservedTables());
+ 	}
+ 	
     private TableResponseDTO convertToDto(TableEntity table) {
         TableResponseDTO tableResponse = modelMapper.map(table, TableResponseDTO.class);
         return tableResponse;
@@ -65,4 +70,9 @@ public class TableController {
     private TableEntity convertToEntity(TableCreateDTO tableDTO) {
         return modelMapper.map(tableDTO, TableEntity.class);
     }
+    
+	private List<TableResponseDTO> convertToDto(List<TableEntity> listCourse) {
+		return listCourse.stream().map(course -> modelMapper.map(course, TableResponseDTO.class))
+				.collect(Collectors.toList());
+	}
 }

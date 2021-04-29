@@ -5,7 +5,7 @@ import de.tekup.ds.models.TableEntity;
 import java.util.List;
 
 public interface TableService {
-    List<TableEntity> getMostReservedTables(int rank);
+    List<TableEntity> getMostReservedTables();
     List<TableEntity> getAllTables();
     TableEntity getTableByID(long id);
     TableEntity createNewTable(TableEntity newTable);

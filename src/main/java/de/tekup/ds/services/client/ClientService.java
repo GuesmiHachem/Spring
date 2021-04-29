@@ -11,5 +11,6 @@ public interface ClientService {
     ClientEntity deleteClientbyID(long id);
     ClientEntity updateClient(long id ,ClientEntity newClient);
     List<ClientEntity> getTopClients ();
+	List<String> bestDay(int idClient);
 
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -85,5 +86,39 @@ public class ClientServiceImpl implements ClientService {
 					.collect(Collectors.toList());//
 		}
 		return new ArrayList<ClientEntity>();
+	}
+
+	@Override
+	public List<String> bestDay(int idClient) {
+		// TODO Auto-generated method stub
+		List<String> listDay;
+		Map<String, Long> counted;
+		Optional<Entry<String, Long>> maxEntry;
+		// ==============================
+		ClientEntity client = getClientByID(idClient);
+		listDay = client.getInvoices()//
+				.stream()//
+				.map(c -> c.getDate().getDayOfWeek().toString()).collect(Collectors.toList());
+
+		counted = listDay //
+				.stream()//
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));//
+
+		maxEntry = counted//
+				.entrySet()//
+				.stream()//
+				.max(Comparator.comparing(Map.Entry::getValue));//
+		if (maxEntry.isPresent()) {
+			return counted//
+					.entrySet()//
+					.stream()//
+					.filter(c -> c.getValue() == maxEntry.get().getValue())//
+					.collect(Collectors.toList())//
+					.stream()//
+					.map(c -> c.getKey())//
+					.collect(Collectors.toList());//
+		}
+		return new ArrayList<String>();
+
 	}
 }
