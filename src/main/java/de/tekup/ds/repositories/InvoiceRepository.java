@@ -2,9 +2,9 @@ package de.tekup.ds.repositories;
 
 import de.tekup.ds.models.InvoiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import java.time.LocalDate;
-
-public interface InvoiceRepository extends JpaRepository<InvoiceEntity,Long> {
-
+public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Long> {
+	List<InvoiceEntity> findAllByDateBetween(LocalDateTime atStartOfDay, LocalDateTime atTime);
 }

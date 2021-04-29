@@ -3,20 +3,15 @@ package de.tekup.ds.controllers;
 import de.tekup.ds.dtos.client.ClientCreateDTO;
 import de.tekup.ds.dtos.client.ClientResponseDTO;
 import de.tekup.ds.dtos.client.ClientUpdateDTO;
-import de.tekup.ds.dtos.course.CourseResponseDTO;
 import de.tekup.ds.models.ClientEntity;
-import de.tekup.ds.models.CourseEntity;
 import de.tekup.ds.services.client.ClientService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

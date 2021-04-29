@@ -62,8 +62,8 @@ public class CourseServiceImpl implements CourseService {
 	public List<CourseEntity> getBestSellingCourse(LocalDate startDate, LocalDate endDate) {
 		// ==============================
 		List<CourseEntity> listCourseEntity;
-		Map<CourseEntity, Long> countd;
-		Optional<Entry<CourseEntity, Long>> maxEntry;
+		Map<CourseEntity, Long> listcount;
+		Optional<Entry<CourseEntity, Long>> maxListcount;
 		// ==============================
 
 		// All courses between startDate and endDate
@@ -71,21 +71,21 @@ public class CourseServiceImpl implements CourseService {
 				.findAllByInvoices_dateBetween(startDate.atStartOfDay(), endDate.atTime(23, 59, 59));//
 
 		// count of All courses between startDate and endDate
-		countd = listCourseEntity//
+		listcount = listCourseEntity//
 				.stream()//
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));//
 
 		// max count of All courses between startDate and endDate
-		maxEntry = countd//
+		maxListcount = listcount//
 				.entrySet()//
 				.stream()//
 				.max(Comparator.comparing(Map.Entry::getValue));//
 
-		if (maxEntry.isPresent()) {
-			return countd//
+		if (maxListcount.isPresent()) {
+			return listcount//
 					.entrySet()//
 					.stream()//
-					.filter(c -> c.getValue() == maxEntry.get().getValue())//
+					.filter(c -> c.getValue() == maxListcount.get().getValue())//
 					.collect(Collectors.toList())//
 					.stream()//
 					.map(c -> c.getKey())//

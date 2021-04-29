@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface InvoiceService {
-    void getRevenuStatistics();
-    float getRevenuByPeriod(LocalDate startDate, LocalDate endDate);
+
+    double getRevenuByPeriod(LocalDate startDate, LocalDate endDate);
+    double getRevenuByDay(LocalDate day) ;
     List<InvoiceEntity> getAllInvoices();
     InvoiceEntity getInvoiceByID(long id);
     InvoiceEntity createNewInvoice(InvoiceEntity newInvoice);

@@ -58,23 +58,23 @@ public class TableServiceImpl implements TableService {
 
 	@Override
 	public List<TableEntity> getMostReservedTables() {
-		Map<TableEntity, Long> countd;
-		Optional<Entry<TableEntity, Long>> maxEntry;
 		// ==============================
-		countd = this.invoiceRepo.findAll()//
+		Map<TableEntity, Long> listcount;
+		Optional<Entry<TableEntity, Long>> maxListcount;
+		// ==============================
+		listcount = this.invoiceRepo.findAll()//
 				.stream()//
 				.filter(c -> c.getClient() != null)
 				.collect(Collectors.groupingBy(InvoiceEntity::getTable, Collectors.counting()));//
-
-		maxEntry = countd//
+		maxListcount = listcount//
 				.entrySet()//
 				.stream()//
 				.max(Comparator.comparing(Map.Entry::getValue));//
-		if (maxEntry.isPresent()) {
-			return countd//
+		if (maxListcount.isPresent()) {
+			return listcount//
 					.entrySet()//
 					.stream()//
-					.filter(c -> c.getValue() == maxEntry.get().getValue())//
+					.filter(c -> c.getValue() == maxListcount.get().getValue())//
 					.collect(Collectors.toList())//
 					.stream()//
 					.map(c -> c.getKey())//

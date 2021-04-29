@@ -3,8 +3,6 @@ package de.tekup.ds.controllers;
 import de.tekup.ds.dtos.course.CourseCreateDTO;
 import de.tekup.ds.dtos.course.CourseResponseDTO;
 import de.tekup.ds.dtos.course.CourseUpdateDTO;
-import de.tekup.ds.dtos.table.TableResponseDTO;
-import de.tekup.ds.dtos.table.TableUpdateDTO;
 import de.tekup.ds.models.*;
 import de.tekup.ds.repositories.CourseRepository;
 import de.tekup.ds.services.course.CourseService;
@@ -15,7 +13,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,7 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CourseController {
 	private CourseService service;
-	
+
 	@Autowired
 	private CourseRepository repo;
 	private ModelMapper modelMapper;
@@ -83,7 +80,6 @@ public class CourseController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
 		return this.convertToDto(service.getBestSellingCourse(dateDebut, dateFin));
 	}
-
 
 	private CourseEntity convertToEntity(CourseCreateDTO courseDTO) {
 		return modelMapper.map(courseDTO, CourseEntity.class);

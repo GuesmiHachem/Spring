@@ -63,23 +63,24 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public List<ClientEntity> getTopClients() {
-		Map<ClientEntity, Long> countd;
-		Optional<Entry<ClientEntity, Long>> maxEntry;
 		// ==============================
-		countd = this.invoiceRepo.findAll()//
+		Map<ClientEntity, Long> listCount;
+		Optional<Entry<ClientEntity, Long>> maxListCount;
+		// ==============================
+		listCount = this.invoiceRepo.findAll()//
 				.stream()//
 				.filter(c -> c.getClient() != null)
 				.collect(Collectors.groupingBy(InvoiceEntity::getClient, Collectors.counting()));//
 
-		maxEntry = countd//
+		maxListCount = listCount//
 				.entrySet()//
 				.stream()//
 				.max(Comparator.comparing(Map.Entry::getValue));//
-		if (maxEntry.isPresent()) {
-			return countd//
+		if (maxListCount.isPresent()) {
+			return listCount//
 					.entrySet()//
 					.stream()//
-					.filter(c -> c.getValue() == maxEntry.get().getValue())//
+					.filter(c -> c.getValue() == maxListCount.get().getValue())//
 					.collect(Collectors.toList())//
 					.stream()//
 					.map(c -> c.getKey())//
@@ -90,29 +91,29 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public List<String> bestDay(int idClient) {
-		// TODO Auto-generated method stub
+		// ==============================
 		List<String> listDay;
-		Map<String, Long> counted;
-		Optional<Entry<String, Long>> maxEntry;
+		Map<String, Long> listcount;
+		Optional<Entry<String, Long>> maxListcount;
 		// ==============================
 		ClientEntity client = getClientByID(idClient);
 		listDay = client.getInvoices()//
 				.stream()//
 				.map(c -> c.getDate().getDayOfWeek().toString()).collect(Collectors.toList());
 
-		counted = listDay //
+		listcount = listDay //
 				.stream()//
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));//
 
-		maxEntry = counted//
+		maxListcount = listcount//
 				.entrySet()//
 				.stream()//
 				.max(Comparator.comparing(Map.Entry::getValue));//
-		if (maxEntry.isPresent()) {
-			return counted//
+		if (maxListcount.isPresent()) {
+			return listcount//
 					.entrySet()//
 					.stream()//
-					.filter(c -> c.getValue() == maxEntry.get().getValue())//
+					.filter(c -> c.getValue() == maxListcount.get().getValue())//
 					.collect(Collectors.toList())//
 					.stream()//
 					.map(c -> c.getKey())//
